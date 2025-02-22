@@ -1,0 +1,11 @@
+{
+    "files": [
+        "widget.py",
+        "form.ui",
+        "peppino_support.py",
+        "peppino_math.py",
+        "fractions2.py",
+        "ui_form.py",
+        "doc.py"
+    ]
+}
