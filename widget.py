@@ -50,7 +50,10 @@ def daMediare(numeri):
         mediaPonderata=peppino_math.media_ponderata(*numeri) if len(numeri)%2==0 else 'Non calcolabile'
     except Exception as e:
         mediaPonderata=str(e)
-    mediaGeometrica=peppino_math.media_geometrica(*numeri) if not 0 in numeri else 'Non calcolabile.'
+    try:
+        mediaGeometrica=peppino_math.media_geometrica(*numeri) if not 0 in numeri else 'Non calcolabile.'
+    except Exception as e:
+        mediaGeometrica=str(e)
     return f'''Media Aritmetica = {mediaAritmetica}
 Media Ponderata = {mediaPonderata} (considerando i numeri inseriti in coppia valore/peso)
 Media Geometrica = {mediaGeometrica}'''
@@ -115,6 +118,12 @@ class Widget(QWidget):
             all,interi,floating,frazioni,complessi = peppino_support.analizzatore_numeri(self.ui.textInput.toPlainText(),i,fl,frc)
             output=''
             intEFloat = interi + floating
+            if len(interi) > 0 and len(floating)>0:
+                output=f'{output}Operazioni su interi e float:\nInteri e float inseriti: {intEFloat}\nSommatoria: {sum(intEFloat)}\n'
+                output=f'{output}{daProporzionare(intEFloat)}'
+                if 'media' in comandi:
+                    output=f'{output}{daMediare(intEFloat)}\n'
+                output=f'{output}\n'
             if len(interi) > 0:
                 output=f'{output}Operazioni sui numeri interi:\nNumeri interi inseriti: {interi}\nSommatoria: {sum(interi)}\n'
                 output=f'{output}Il minimo comune multiplo è uguale a {math.lcm(*interi)}\nIl massimo comune divisore è uguale a {math.gcd(*interi)}\n'
@@ -136,12 +145,6 @@ class Widget(QWidget):
                 output=f'{output}\n'
             if len(complessi)> 0:
                 output=f'{output}Operazioni sui numeri complessi:\nNumeri complessi inseriti: {complessi}\nSommatoria: {sum(complessi)}\n'
-                output=f'{output}\n'
-            if len(interi) > 0 and len(floating)>0:
-                output=f'{output}Operazioni su interi e float:\nInteri e float inseriti: {intEFloat}\nSommatoria: {sum(intEFloat)}\n'
-                output=f'{output}{daProporzionare(intEFloat)}'
-                if 'media' in comandi:
-                    output=f'{output}{daMediare(intEFloat)}\n'
                 output=f'{output}\n'
             if len(frazioni)==2 and 'potenza_mk2' in comandi:
                 output=f'{output}{peppino_math.potenza_mk2(*frazioni)}\n'

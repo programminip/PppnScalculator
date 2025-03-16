@@ -125,7 +125,7 @@ def media_geometrica(*args):
     prodotto = 1
     for numero in args:
         if numero <= 0:
-            raise ValueError("Errore nei dati passati alla funzione.")
+            raise ValueError("Non calcolabile con numeri <= 0")
         prodotto*=numero
     return prodotto**(1/len(args))
 def scomposizione_fattori_primi(n): # ideata da Gemini 2.0 e migliorata da me
